@@ -1,12 +1,18 @@
+import Link from "next/link";
+
 interface TextProps {
   text: string;
+  className?: string;
+  href?: string;
 }
 
-export default function Text({ text }: TextProps) {
+export default function Text({ text, className = "", href }: TextProps) {
+  const targetHref = href || `/${text.toLowerCase()}`;
+
   return (
-    <a
-      href={`#${text.toLowerCase()}`}
-      className="
+    <Link
+      href={targetHref}
+      className={`
         group
         relative
         inline-flex
@@ -20,7 +26,8 @@ export default function Text({ text }: TextProps) {
         font-bold
         tracking-wide
         text-zinc-900
-      "
+        ${className}
+      `}
     >
       {/* Hover Background */}
       <span
@@ -50,6 +57,6 @@ export default function Text({ text }: TextProps) {
       >
         {text}
       </span>
-    </a>
+    </Link>
   );
 }
