@@ -1,10 +1,52 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 export default function RightText() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const headingLines =
+        gsap.utils.toArray<HTMLElement>(".right-heading-line");
+
+      gsap.fromTo(
+        headingLines,
+        {
+          opacity: 0,
+          x: 120,
+          rotate: 5,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          rotate: 0,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    },
+    {
+      scope: containerRef,
+    },
+  );
+
   return (
-    <div className="text-right relative z-10"> {/* Ensure text sits above the blur */}
-      <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] text-zinc-900">
-        SPACES <br />
-        THAT <br />
-        INSPIRE
+    <div ref={containerRef} className="relative z-10 text-right">
+      <h1 className="text-7xl font-black uppercase leading-[0.8] tracking-tighter text-zinc-900 md:text-9xl">
+        <span className="right-heading-line block">SPACES</span>
+
+        <span className="right-heading-line block">THAT</span>
+
+        <span className="right-heading-line block">INSPIRE</span>
       </h1>
     </div>
   );
