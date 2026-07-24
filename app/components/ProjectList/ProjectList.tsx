@@ -129,7 +129,7 @@ export default function ProjectList() {
     },
     {
       scope: containerRef,
-    },
+    }
   );
 
   /*
@@ -138,13 +138,20 @@ export default function ProjectList() {
   |--------------------------------------------------------------------------
   */
 
-  const handleMouseEnter = (index: number) => {
+  const handleMouseEnter = (index: number, event: React.MouseEvent<HTMLDivElement>) => {
     setHoveredIndex(index);
 
+    const container = containerRef.current;
     const imageContainer = imageContainerRef.current;
 
-    if (!imageContainer) return;
+    if (!container || !imageContainer) return;
 
+    // Instantly snap the image container to the exact current mouse position on enter
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    gsap.set(imageContainer, { x, y });
     gsap.killTweensOf(imageContainer);
 
     gsap.fromTo(
@@ -160,7 +167,7 @@ export default function ProjectList() {
         rotate: 0,
         duration: 0.5,
         ease: "back.out(1.7)",
-      },
+      }
     );
   };
 
@@ -242,7 +249,7 @@ export default function ProjectList() {
           <div
             key={index}
             onMouseEnter={(event) => {
-              handleMouseEnter(index);
+              handleMouseEnter(index, event);
               handleRowEnter(event);
             }}
             onMouseLeave={(event) => {

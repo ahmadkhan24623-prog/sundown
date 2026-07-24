@@ -62,16 +62,20 @@ export default function Footer() {
 
       /*
       |--------------------------------------------------------------------------
-      | Main Footer GSAP Animation
+      | Main Footer GSAP ScrollTrigger Animation
       |--------------------------------------------------------------------------
       */
 
       const timeline = gsap.timeline({
-        delay: 0.2,
+        scrollTrigger: {
+          trigger: footer,
+          start: "top 85%", // Triggers when the top of the footer hits 85% down the viewport
+          toggleActions: "play none none reverse", // Plays forward on enter, reverses if you scroll back up
+        },
       });
 
       timeline
-        // Footer comes from bottom
+        // Footer slides up from bottom
         .to(footer, {
           yPercent: 0,
           duration: 1.3,
@@ -88,7 +92,7 @@ export default function Footer() {
             stagger: 0.15,
             ease: "power3.out",
           },
-          "-=0.7",
+          "-=0.7"
         )
 
         // Newsletter
@@ -100,7 +104,7 @@ export default function Footer() {
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.6",
+          "-=0.6"
         )
 
         // Large Sundown title
@@ -113,7 +117,7 @@ export default function Footer() {
             duration: 1.2,
             ease: "power4.out",
           },
-          "-=0.6",
+          "-=0.6"
         )
 
         // Divider
@@ -124,7 +128,7 @@ export default function Footer() {
             duration: 1,
             ease: "power3.inOut",
           },
-          "-=0.7",
+          "-=0.7"
         )
 
         // Footer details
@@ -136,7 +140,7 @@ export default function Footer() {
             duration: 0.7,
             ease: "power3.out",
           },
-          "-=0.6",
+          "-=0.6"
         );
 
       /*
@@ -216,7 +220,7 @@ export default function Footer() {
     },
     {
       scope: footerRef,
-  },
+    }
   );
 
   return (
