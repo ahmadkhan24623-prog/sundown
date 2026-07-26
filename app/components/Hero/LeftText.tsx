@@ -4,17 +4,11 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-interface LeftTextProps {
-  isLoaded: boolean;
-}
-
-export default function LeftText({ isLoaded }: LeftTextProps) {
+export default function LeftText() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!isLoaded) return;
-
       const words = gsap.utils.toArray<HTMLElement>(".left-word");
 
       // Set initial hidden state immediately
@@ -31,7 +25,6 @@ export default function LeftText({ isLoaded }: LeftTextProps) {
     },
     {
       scope: containerRef,
-      dependencies: [isLoaded],
     }
   );
 

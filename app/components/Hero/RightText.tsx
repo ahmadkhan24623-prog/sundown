@@ -4,17 +4,11 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-interface RightTextProps {
-  isLoaded: boolean;
-}
-
-export default function RightText({ isLoaded }: RightTextProps) {
+export default function RightText() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!isLoaded) return;
-
       const headingLines =
         gsap.utils.toArray<HTMLElement>(".right-heading-line");
 
@@ -33,7 +27,6 @@ export default function RightText({ isLoaded }: RightTextProps) {
     },
     {
       scope: containerRef,
-      dependencies: [isLoaded],
     }
   );
 
