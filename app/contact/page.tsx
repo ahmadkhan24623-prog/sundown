@@ -13,8 +13,8 @@ export default function Home() {
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
       <section className="w-full px-6 md:px-16 flex flex-col md:flex-row items-end justify-between pt-24">
-        <LeftText isLoaded={!isLoading} />
-        <RightText isLoaded={!isLoading} />
+        <LeftText isLoaded={isLoading} />
+        <RightText isLoaded={isLoading} />
       </section>
     </main>
   );
