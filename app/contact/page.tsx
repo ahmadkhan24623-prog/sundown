@@ -1,7 +1,21 @@
-export default function WorkPage() {
+"use client";
+
+import { useState } from "react";
+import Loader from "../components/Loader/Loader";
+import LeftText from "../components/Hero/LeftText";
+import RightText from "../components/Hero/RightText";
+
+export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#EFEAE2] text-zinc-900">
-      <h1 className="text-4xl font-bold">This is work page</h1>
-    </div>
+    <main className="relative min-h-screen bg-[#EFEAE2] overflow-hidden">
+      {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
+
+      <section className="w-full px-6 md:px-16 flex flex-col md:flex-row items-end justify-between pt-24">
+        <LeftText isLoaded={!isLoading} />
+        <RightText isLoaded={!isLoading} />
+      </section>
+    </main>
   );
 }
