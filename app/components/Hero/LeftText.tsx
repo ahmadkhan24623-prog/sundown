@@ -4,36 +4,35 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function LeftText() {
+interface LeftTextProps {
+  isLoaded: boolean;
+}
+
+export default function LeftText({ isLoaded }: LeftTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
+      if (!isLoaded) return;
+
       const words = gsap.utils.toArray<HTMLElement>(".left-word");
 
-      gsap.fromTo(
-        words,
-        {
-          opacity: 0,
-          y: 60,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
+      // Set initial hidden state immediately
+      gsap.set(words, { opacity: 0, y: 60 });
+
+      // Animate into view
+      gsap.to(words, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
     },
     {
       scope: containerRef,
-    },
+      dependencies: [isLoaded],
+    }
   );
 
   return (

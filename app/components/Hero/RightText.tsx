@@ -4,39 +4,37 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function RightText() {
+interface RightTextProps {
+  isLoaded: boolean;
+}
+
+export default function RightText({ isLoaded }: RightTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
+      if (!isLoaded) return;
+
       const headingLines =
         gsap.utils.toArray<HTMLElement>(".right-heading-line");
 
-      gsap.fromTo(
-        headingLines,
-        {
-          opacity: 0,
-          x: 120,
-          rotate: 5,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          rotate: 0,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
+      // Set initial hidden state immediately
+      gsap.set(headingLines, { opacity: 0, x: 120, rotate: 5 });
+
+      // Animate into view
+      gsap.to(headingLines, {
+        opacity: 1,
+        x: 0,
+        rotate: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power4.out",
+      });
     },
     {
       scope: containerRef,
-    },
+      dependencies: [isLoaded],
+    }
   );
 
   return (
